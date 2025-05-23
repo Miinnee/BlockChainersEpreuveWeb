@@ -7,86 +7,176 @@
     <link rel="stylesheet" href="../styles/reservation.css">
 </head>
 <body>
-    <div class="background"></div>
+    <div class="page-background"></div>
+    <div class="floating-lights">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
     
-    <div class="container">
-        <div class="reservation-card">
-            <div class="floating-lights">
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
+    <div class="reservation-container">
+        <h1 class="reservation-title">Lyon Lumière - Réservation</h1>
+        
+        <!-- Section des formules -->
+        <section class="formulas-section">
+            <h2>Choisissez votre formule</h2>
+            <div class="formulas-grid">
+                <label class="formula-card">
+                    <input type="radio" name="formula" value="decouverte" checked>
+                    <div class="formula-content">
+                        <h3>Découverte</h3>
+                        <div class="formula-price">25€</div>
+                        <p>Visite guidée de 2h<br>Photos incluses</p>
+                    </div>
+                </label>
+                
+                <label class="formula-card">
+                    <input type="radio" name="formula" value="premium">
+                    <div class="formula-content">
+                        <h3>Premium</h3>
+                        <div class="formula-price">45€</div>
+                        <p>Visite VIP de 3h<br>Champagne & Photos HD</p>
+                    </div>
+                </label>
             </div>
-            
-            <div class="header">
-                <h1 class="title">Lyon Lumière</h1>
-                <p class="subtitle">Réservez votre visite nocturne</p>
-            </div>
-
+        </section>
+        
+        <!-- Section du formulaire -->
+        <section class="reservation-form-section">
+            <h2>Vos informations</h2>
             <form id="reservationForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Prénom</label>
-                        <input type="text" class="form-input" placeholder="Votre prénom" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Nom</label>
-                        <input type="text" class="form-input" placeholder="Votre nom" required>
-                    </div>
-                </div>
-
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" placeholder="votre@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-input" placeholder="06 12 34 56 78" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-input" required>
+                    <h3>Coordonnées</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Prénom</label>
+                            <input type="text" placeholder="Votre prénom" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Nom</label>
+                            <input type="text" placeholder="Votre nom" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Heure</label>
-                        <select class="form-select" required>
-                            <option value="">Choisir</option>
-                            <option value="19:00">19h00</option>
-                            <option value="19:30">19h30</option>
-                            <option value="20:00">20h00</option>
-                            <option value="20:30">20h30</option>
-                            <option value="21:00">21h00</option>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Email</label>
+                            <input type="email" placeholder="votre@email.com" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Téléphone</label>
+                            <input type="tel" placeholder="06 12 34 56 78" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h3>Date et horaire</h3>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Date</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Heure</label>
+                            <select required>
+                                <option value="">Choisir un horaire</option>
+                                <option value="19:00">19h00</option>
+                                <option value="19:30">19h30</option>
+                                <option value="20:00">20h00</option>
+                                <option value="20:30">20h30</option>
+                                <option value="21:00">21h00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label>Nombre de personnes</label>
+                        <select id="nbPersonnes" required>
+                            <option value="">Sélectionner</option>
+                            <option value="1">1 personne</option>
+                            <option value="2">2 personnes</option>
+                            <option value="3">3 personnes</option>
+                            <option value="4">4 personnes</option>
+                            <option value="5">5 personnes</option>
+                            <option value="6">6+ personnes</option>
                         </select>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Nombre de personnes</label>
-                    <select class="form-select" required>
-                        <option value="">Sélectionner</option>
-                        <option value="1">1 personne</option>
-                        <option value="2">2 personnes</option>
-                        <option value="3">3 personnes</option>
-                        <option value="4">4 personnes</option>
-                        <option value="5">5 personnes</option>
-                        <option value="6+">6+ personnes</option>
-                    </select>
+                
+                <!-- Résumé des prix -->
+                <div class="price-summary">
+                    <div class="price-line">
+                        <span>Formule sélectionnée</span>
+                        <span id="selectedFormula">Découverte</span>
+                    </div>
+                    <div class="price-line">
+                        <span>Prix unitaire</span>
+                        <span id="unitPrice">25€</span>
+                    </div>
+                    <div class="price-line">
+                        <span>Nombre de personnes</span>
+                        <span id="nbPersonnesDisplay">-</span>
+                    </div>
+                    <div class="price-line total">
+                        <span>Total</span>
+                        <span id="totalPrice">0€</span>
+                    </div>
                 </div>
-
-                <div class="price-info">
-                    <div class="price">25€ / personne</div>
-                    <div class="price-details">Visite guidée de 2h • Photos incluses</div>
-                </div>
-
-                <button type="submit" class="btn-reserve">
-                    Réserver maintenant
+                
+                <button type="submit" class="pay-button">
+                    Procéder au paiement
                 </button>
             </form>
+        </section>
+    </div>
+    
+    <!-- Modal de paiement -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Finaliser votre réservation</h3>
+            
+            <form class="payment-form">
+                <div class="form-field">
+                    <label>Numéro de carte</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Date d'expiration</label>
+                        <input type="text" placeholder="MM/AA" required>
+                    </div>
+                    <div class="form-field">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123" required>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label>Nom sur la carte</label>
+                    <input type="text" placeholder="DUPONT Jean" required>
+                </div>
+                
+                <div class="payment-total">
+                    Total à payer : <span id="modalTotal">0€</span>
+                </div>
+                
+                <button type="submit" class="confirm-payment-btn">
+                    Confirmer le paiement
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Message de succès -->
+    <div id="paymentSuccess" class="payment-success">
+        <div class="success-content">
+            <div class="checkmark">✓</div>
+            <h3>Paiement confirmé !</h3>
+            <p>Votre réservation a été enregistrée avec succès.<br>
+            Un email de confirmation vous a été envoyé.</p>
+            <button class="close-success-btn">Fermer</button>
         </div>
     </div>
 
