@@ -5,17 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Epreuve Web</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
         #particles-js {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background-color: #000; /* Ajoutez une couleur de fond si nécessaire */
+            background-image: url("/assets/img/back-image.JPG");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Filtre noir transparent */
+            background-blend-mode: darken;
+            /* Fusionne le noir avec l’image */
         }
+
 
         .content {
             position: relative;
@@ -37,7 +48,7 @@
 
             <!-- logo -->
             <a href="#" class="menu-logo">
-                <img src="https://wweb.dev/resources/navigation-generator/logo-placeholder.png" alt="My Awesome Website"/>
+                <img src="/assets/img/logo.png" alt="My Awesome Website" />
             </a>
 
             <!-- menu items -->
@@ -79,84 +90,85 @@
         </div>
     </div>
 </body>
+
 </html>
 
-    <script>
-        // Initialisation des particules après le chargement de la page
-        document.addEventListener('DOMContentLoaded', function() {
-            particlesJS("particles-js", {
-                "particles": {
-                    "number": {
-                        "value": 80, // Réduit pour de meilleures performances
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
+<script>
+    // Initialisation des particules après le chargement de la page
+    document.addEventListener('DOMContentLoaded', function () {
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80, // Réduit pour de meilleures performances
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#c88d00"
+                },
+                "shape": {
+                    "type": "star",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
                     },
-                    "color": {
-                        "value": "#c88d00"
-                    },
-                    "shape": {
-                        "type": "star",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        },
-                        "polygon": {
-                            "nb_sides": 5
-                        }
-                    },
-                    "opacity": {
-                        "value": 1,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 1,
-                            "opacity_min": 0,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "enable": false,
-                            "speed": 4,
-                            "size_min": 0.3,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 1,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 4,
+                        "size_min": 0.3,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "bounce",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 600
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
                         "enable": false
                     },
-                    "move": {
-                        "enable": true,
-                        "speed": 3,
-                        "direction": "none",
-                        "random": true,
-                        "straight": false,
-                        "out_mode": "bounce",
-                        "bounce": false,
-                        "attract": {
-                            "enable": false,
-                            "rotateX": 600,
-                            "rotateY": 600
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": false
-                        },
-                        "onclick": {
-                            "enable": false
-                        },
-                        "resize": true
-                    }
-                },
-                "retina_detect": false
-            });
+                    "onclick": {
+                        "enable": false
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": false
         });
-    </script>
+    });
+</script>
