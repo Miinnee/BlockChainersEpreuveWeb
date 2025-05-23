@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation - Lyon Lumière</title>
+    <link rel="stylesheet" href="reservation.css">
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        <div class="reservation-card">
+            <div class="floating-lights">
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+            </div>
+            
+            <div class="header">
+                <h1 class="title">Lyon Lumière</h1>
+                <p class="subtitle">Réservez votre visite nocturne</p>
+            </div>
+
+            <form id="reservationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Prénom</label>
+                        <input type="text" class="form-input" placeholder="Votre prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" class="form-input" placeholder="Votre nom" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="votre@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <input type="tel" class="form-input" placeholder="06 12 34 56 78" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Heure</label>
+                        <select class="form-select" required>
+                            <option value="">Choisir</option>
+                            <option value="19:00">19h00</option>
+                            <option value="19:30">19h30</option>
+                            <option value="20:00">20h00</option>
+                            <option value="20:30">20h30</option>
+                            <option value="21:00">21h00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nombre de personnes</label>
+                    <select class="form-select" required>
+                        <option value="">Sélectionner</option>
+                        <option value="1">1 personne</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3">3 personnes</option>
+                        <option value="4">4 personnes</option>
+                        <option value="5">5 personnes</option>
+                        <option value="6+">6+ personnes</option>
+                    </select>
+                </div>
+
+                <div class="price-info">
+                    <div class="price">25€ / personne</div>
+                    <div class="price-details">Visite guidée de 2h • Photos incluses</div>
+                </div>
+
+                <button type="submit" class="btn-reserve">
+                    Réserver maintenant
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="./reservation.js"></script>
+</body>
+</html>
