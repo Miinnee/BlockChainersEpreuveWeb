@@ -1,21 +1,3 @@
-:root {
-    --gold-primary: #D4AF37;
-    --gold-light: #F9E0A8;
-    --gold-dark: #996515;
-    --dark-primary: #121212;
-    --dark-secondary: #1A1A1A;
-    --text-light: #F0F0F0;
-    --text-muted: #A0A0A0;
-    --glass-bg: rgba(20, 20, 30, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
@@ -25,6 +7,9 @@ body {
     padding: 40px;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 .gallery-container {
@@ -162,14 +147,6 @@ body {
         width: 150px;
         height: 120px;
     }
-}
-
-
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Playfair Display', serif;
 }
 
 .fullscreen-gallery {
