@@ -30,6 +30,9 @@ body {
     position: relative;
     overflow-x: hidden;
     color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Background animé avec effet de particules */
@@ -62,6 +65,7 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.1),
         inset 0 -1px 0 rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
+    width: 100%;
 }
 
 .header::before {
@@ -568,6 +572,7 @@ body {
   color: var(--text-light);
   padding-top: 80px;
   overflow: hidden;
+  width: 100%;
 }
 
 .footer-waves {
