@@ -641,7 +641,165 @@
 
 </script>
 
+<div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-content">
+        <p>Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre 
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" class="cookie-link">politique de cookies</a>.</p>
+        <div class="cookie-buttons">
+            <button id="accept-cookies" class="cookie-btn accept-btn"><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Accepter</a></button>
+            <button id="reject-cookies" class="cookie-btn reject-btn"><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Refuser</a></button>
+        </div>
+    </div>
+</div>
 
+<style>
+    .cookie-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--dark-secondary);
+        backdrop-filter: blur(20px);
+        padding: 20px;
+        box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        transform: translateY(100%);
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border-top: 1px solid var(--gold-primary);
+    }
+
+    .cookie-banner.show {
+        transform: translateY(0);
+    }
+
+    .cookie-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .cookie-content p {
+        color: var(--text-light);
+        margin: 0;
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .cookie-link {
+        color: var(--gold-light);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .cookie-link:hover {
+        text-decoration: underline;
+        color: var(--gold-primary);
+    }
+
+    .cookie-buttons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .cookie-btn {
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+
+    .accept-btn {
+        background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
+        color: var(--dark-secondary);
+    }
+
+    .reject-btn {
+        background: transparent;
+        color: var(--text-light);
+        border: 2px solid var(--text-muted);
+    }
+
+    .accept-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .reject-btn:hover {
+        border-color: var(--text-light);
+        color: var(--gold-light);
+    }
+
+    @media (max-width: 768px) {
+        .cookie-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .cookie-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+        const rejectBtn = document.getElementById('reject-cookies');
+        
+        // Vérifier si le choix existe déjà
+        if (!localStorage.getItem('cookieChoice')) {
+            // Afficher le bandeau après un délai (2s)
+            setTimeout(() => {
+                cookieBanner.classList.add('show');
+            }, 2000);
+        }
+        
+        // Gestion du choix
+        function setCookieChoice(choice) {
+            localStorage.setItem('cookieChoice', choice);
+            
+            if (choice === 'accepted') {
+                // Initialiser les cookies analytiques ici
+                console.log('Cookies acceptés - initialisation des trackers');
+            }
+            
+            cookieBanner.classList.remove('show');
+            
+            // Masquer définitivement après l'animation
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 500);
+        }
+        
+        acceptBtn.addEventListener('click', () => setCookieChoice('accepted'));
+        rejectBtn.addEventListener('click', () => setCookieChoice('rejected'));
+        
+        // Optionnel: Gestion fine des cookies
+        function manageCookies() {
+            const choice = localStorage.getItem('cookieChoice');
+            
+            if (choice === 'accepted') {
+                // Charger Google Analytics, Facebook Pixel, etc.
+            } else {
+                // Désactiver les cookies non essentiels
+            }
+        }
+        
+        manageCookies();
+    });
+</script>
 
 <body>
     <div id="particles-js"></div>
