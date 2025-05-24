@@ -6,6 +6,7 @@
     <title>Carte Interactive - Lyon Lumière</title>
     <link rel="stylesheet" href="../styles/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/img/logo2.png">
     <style>
         /* Styles existants conservés */
         
@@ -204,10 +205,12 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="../scripts/header.js" defer></script>
 </head>
 <body>
     <div id="particles-js"></div>
+
     <div class="floating-lights">
         <div class="light"></div>
         <div class="light"></div>
@@ -219,7 +222,7 @@
 
     <header class="header">
         <nav class="nav-container">
-            <a href="../../index.html" class="logo">
+            <a href="../index.html" class="logo">
                 <div class="logo-icon"></div>
                 <span>Lyon Lumière</span>
             </a>
@@ -232,9 +235,9 @@
 
             <div class="nav-menu">
                 <div class="nav-section">
-                    <a href="../../index.html" class="nav-link"><span>Accueil</span></a>
-                    <a href="../reservation.html" class="nav-link"><span>Réservation</span></a>
-                    <a href="../login.html" class="nav-link active"><span>Connexion</span></a>
+                    <a href="../index.html" class="nav-link"><span>Accueil</span></a>
+                    <a href="./reservation.html" class="nav-link"><span>Réservation</span></a>
+                    <a href="./login.html" class="nav-link active"><span>Connexion</span></a>
                 </div>
             </div>
         </nav>
@@ -345,9 +348,9 @@
                     <h3 class="footer-title">Liens rapides</h3>
                     <ul class="footer-links">
                         <li><a href="../index.html">Accueil</a></li>
-                        <li><a href="../pages/reservation.html">Réservations</a></li>
-                        <li><a href="../pages/login.html">Connexion</a></li>
-                        <li><a href="../pages/register.html">Inscription</a></li>
+                        <li><a href="./reservation.html">Réservations</a></li>
+                        <li><a href="./login.html">Connexion</a></li>
+                        <li><a href="./register.html">Inscription</a></li>
                         <li><a href="#">Programme</a></li>
                         <li><a href="#">Artistes</a></li>
                     </ul>
@@ -468,5 +471,86 @@
             });
         });
     </script>
+
+<script>
+    // Initialisation des particules après le chargement de la page
+    document.addEventListener('DOMContentLoaded', function() {
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#c88d00"
+                },
+                "shape": {
+                    "type": "star",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 1,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 4,
+                        "size_min": 0.3,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "bounce",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 600
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false
+                    },
+                    "onclick": {
+                        "enable": false
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": false
+        });
+    });
+</script>
+
 </body>
 </html>
