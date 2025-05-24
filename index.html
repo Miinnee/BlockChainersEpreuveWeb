@@ -383,6 +383,236 @@
     </style>
 </head>
 
+
+
+<div class="ad-popup" id="adPopup">
+    <button class="ad-close" id="adClose">&times;</button>
+    <div class="ad-content">
+        <h3 class="ad-title">OFFRE SPÉCIALE</h3>
+        <p class="ad-text">Profitez de notre visite guidée exclusive de la Fête des Lumières avec accès VIP !</p>
+        <a href="./pages/reservation.html" class="ad-button">Découvrir</a>
+    </div>
+</div>
+
+<style>
+    /* Styles des popups publicitaires */
+    .ad-popup {
+        position: fixed;
+        bottom: -300px;
+        right: 30px;
+        width: 350px;
+        background: linear-gradient(135deg, rgba(20, 20, 35, 0.98) 0%, rgba(30, 30, 50, 0.98) 100%);
+        backdrop-filter: blur(20px);
+        border: 2px solid var(--gold-primary);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+    }
+
+    .ad-popup.active {
+        opacity: 1;
+        transform: scale(1);
+        bottom: 30px;
+    }
+
+    .ad-popup::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--gold-primary), var(--gold-light), var(--gold-primary));
+        animation: progressBar 8s linear forwards;
+    }
+
+    @keyframes progressBar {
+        0% { width: 100%; }
+        100% { width: 0%; }
+    }
+
+    .ad-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: rgba(255, 215, 0, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: var(--gold-primary);
+        font-size: 18px;
+        border: none;
+    }
+
+    .ad-close:hover {
+        background: rgba(255, 215, 0, 0.3);
+        transform: rotate(90deg);
+    }
+
+    .ad-content {
+        margin-top: 15px;
+    }
+
+    .ad-title {
+        font-family: 'Playfair Display', serif;
+        color: var(--gold-primary);
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .ad-text {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .ad-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
+        color: var(--dark-secondary);
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .ad-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Pour mobile */
+    @media (max-width: 768px) {
+        .ad-popup {
+            width: 90%;
+            right: 5%;
+            left: 5%;
+            bottom: -300px;
+        }
+        
+        .ad-popup.active {
+            bottom: 20px;
+        }
+    }
+</style>
+
+
+
+
+<script>
+    // Messages publicitaires thématisés pour Lyon Lumière
+    const adMessages = [
+        {
+            title: "VISITE GUIDÉE VIP",
+            text: "Accès exclusif aux installations lumineuses avec guide expert. Réservation anticipée seulement!",
+            button: "Réserver",
+            link: "./pages/reservation.html"
+        },
+        {
+            title: "PACK FAMILLE",
+            text: "Bénéficiez de -15% sur les billets famille (2 adultes + 2 enfants) pour une expérience magique!",
+            button: "Profiter",
+            link: "./pages/reservation.html"
+        },
+        {
+            title: "SOIRÉE PRIVÉE",
+            text: "Découvrez notre offre exceptionnelle pour une soirée privée avec vue sur les meilleures illuminations.",
+            button: "En savoir plus",
+            link: "./pages/reservation.html"
+        },
+        {
+            title: "LES FEMMES DE VOTRE REGION",
+            text: "Sandrine et mélanie n'ont que 22 ans et elles ne sont qu'a 2km de vous, est ce que ca vous tente ;) ?",
+            button: "Voulez vous les rencontrez ?",
+            link: "pornhub.com"
+        }
+    ];
+
+    // Éléments DOM
+    const adPopup = document.getElementById('adPopup');
+    const adClose = document.getElementById('adClose');
+    const adTitle = document.querySelector('.ad-title');
+    const adText = document.querySelector('.ad-text');
+    const adButton = document.querySelector('.ad-button');
+
+    // Fonction pour choisir un message aléatoire
+    function setRandomAd() {
+        const randomAd = adMessages[Math.floor(Math.random() * adMessages.length)];
+        adTitle.textContent = randomAd.title;
+        adText.textContent = randomAd.text;
+        adButton.textContent = randomAd.button;
+        adButton.href = randomAd.link;
+    }
+
+    // Fonction pour afficher la popup
+    function showPopup() {
+        setRandomAd();
+        adPopup.classList.add('active');
+        
+        // Fermeture automatique après 8 secondes
+        setTimeout(() => {
+            if (adPopup.classList.contains('active')) {
+                hidePopup();
+            }
+        }, 8000);
+    }
+
+    // Fonction pour cacher la popup
+    function hidePopup() {
+        adPopup.classList.remove('active');
+        
+        // Réafficher aléatoirement entre 30 secondes et 2 minutes
+        const randomTime = Math.floor(Math.random() * (120000 - 30000 + 1)) + 30000;
+        setTimeout(showPopup, randomTime);
+    }
+
+    // Événements
+    adClose.addEventListener('click', hidePopup);
+
+    // Affichage initial - aléatoire entre 5 et 15 secondes après le chargement
+    window.addEventListener('load', () => {
+        const initialDelay = Math.floor(Math.random() * 10000) + 5000;
+        setTimeout(showPopup, initialDelay);
+    });
+
+    // Option: stocker en localStorage si l'utilisateur a déjà fermé
+    // pour ne pas trop le harceler (à décommenter si souhaité)
+    
+    if (localStorage.getItem('adClosed')) {
+        const randomTime = Math.floor(Math.random() * (120000 - 30000 + 1)) + 30000;
+        setTimeout(showPopup, randomTime);
+    } else {
+        const initialDelay = Math.floor(Math.random() * 10000) + 5000;
+        setTimeout(showPopup, initialDelay);
+    }
+
+    adClose.addEventListener('click', () => {
+        localStorage.setItem('adClosed', 'true');
+        hidePopup();
+    });
+    
+</script>
+
+
+
 <body>
     <div id="particles-js"></div>
     
