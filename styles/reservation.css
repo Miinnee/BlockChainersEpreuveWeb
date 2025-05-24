@@ -1296,3 +1296,184 @@ button, a, input, select, textarea, .formula-card {
         max-width: 100%;
     }
 }
+
+/* Styles pour l'interactivité */
+.field-feedback {
+    position: absolute;
+    bottom: -25px;
+    left: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.field-feedback.valid {
+    color: #4CAF50;
+}
+
+.field-feedback.invalid {
+    color: #ff6b6b;
+}
+
+.field-feedback.required {
+    color: #ff9800;
+}
+
+/* Notification système */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    padding: 20px 30px;
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.info {
+    background: rgba(52, 152, 219, 0.9);
+}
+
+.notification.success {
+    background: rgba(76, 175, 80, 0.9);
+}
+
+.notification.error {
+    background: rgba(244, 67, 54, 0.9);
+}
+
+.notification.warning {
+    background: rgba(255, 152, 0, 0.9);
+}
+
+/* Animation shake pour les erreurs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Confettis */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    z-index: 1002;
+    pointer-events: none;
+}
+
+/* États de chargement */
+.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    border-top-color: var(--gold-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Amélioration des transitions des formulaires */
+.form-field input:valid,
+.form-field select:valid {
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.form-field input:invalid:not(:placeholder-shown),
+.form-field select:invalid:not(:placeholder-shown) {
+    border-color: rgba(244, 67, 54, 0.5);
+}
+
+/* Tooltips d'aide */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.tooltip:hover::after {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+/* Animation de pulsation pour attirer l'attention */
+@keyframes pulse-attention {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+.pulse-attention {
+    animation: pulse-attention 2s ease-out infinite;
+}
+
+/* Optimisations de performance */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
