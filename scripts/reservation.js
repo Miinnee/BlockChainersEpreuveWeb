@@ -8,7 +8,7 @@ let formulaPrices = {
 };
 let nbPersonnes = 0;
 
-// Initialisation au chargement de la page
+// Initialisation au chargement de la page"iorqdsfdqs
 document.addEventListener('DOMContentLoaded', function() {
     initializeFormHandlers();
     initializePaymentModal();
