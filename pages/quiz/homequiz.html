@@ -11,10 +11,13 @@
         <link rel="stylesheet" href="../../styles/quizz.css">
         <link rel="stylesheet" href="../../styles/style.css">
 
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script src="../../scripts/header.js" defer></script>
 </head>
 
 <body>
+    <div id="particles-js"></div>
+
     <header class="header">
         <nav class="nav-container">
             <a href="../../index.html" class="logo">
@@ -196,6 +199,85 @@
         </div>
     </footer>
 
+    <script>
+        // Initialisation des particules après le chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#c88d00"
+                    },
+                    "shape": {
+                        "type": "star",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 1,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 4,
+                            "size_min": 0.3,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": false
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "bounce",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 600
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": false
+                        },
+                        "onclick": {
+                            "enable": false
+                        },
+                        "resize": true
+                    }
+                },
+                "retina_detect": false
+            });
+        });
+    </script>
 
     <script src="../../scripts/quiz.js"></script>
 </body>
