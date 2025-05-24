@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monuments de Lyon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .fullscreen-gallery {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+        
+        .fullscreen-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .fullscreen-image.active {
+            opacity: 1;
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .nav-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .arrow-left {
+            left: 20px;
+        }
+        
+        .arrow-right {
+            right: 20px;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            border-radius: 5px;
+            max-width: 80%;
+            z-index: 5;
+        }
+        
+        .image-overlay h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .image-overlay p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="fullscreen-gallery">
+        <!-- Monuments de Lyon avec images réelles -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Basilique_Notre-Dame_de_Fourvi%C3%A8re.jpg/1920px-Basilique_Notre-Dame_de_Fourvi%C3%A8re.jpg" 
+             alt="Basilique Notre-Dame de Fourvière"
+             class="fullscreen-image active"
+             data-title="Basilique Notre-Dame de Fourvière"
+             data-description="Symbole de Lyon, cette basilique offre une vue panoramique sur la ville">
+             
+        <img src="../../assets/img/vieux_lyon.jpg" 
+             alt="Vieux Lyon"
+             class="fullscreen-image"
+             data-title="Vieux Lyon"
+             data-description="Le plus grand quartier Renaissance d'Europe, classé au patrimoine mondial de l'UNESCO">
+             
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Place_des_Terreaux_-_Lyon.jpg/1920px-Place_des_Terreaux_-_Lyon.jpg" 
+             alt="Place des Terreaux"
+             class="fullscreen-image"
+             data-title="Place des Terreaux"
+             data-description="Cœur culturel de Lyon avec l'Hôtel de Ville et le Musée des Beaux-Arts">
+             
+        <img src="../../assets/img/teatre_romain_nuit.jpg" 
+             alt="Théâtres romains de Fourvière"
+             class="fullscreen-image"
+             data-title="Théâtres Romains"
+             data-description="Vestiges de l'époque gallo-romaine, témoins de l'histoire antique de Lyon">
+             
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Mus%C3%A9e_des_confluences_%289352564394%29.jpg/1920px-Mus%C3%A9e_des_confluences_%289352564394%29.jpg" 
+             alt="Musée des Confluences"
+             class="fullscreen-image"
+             data-title="Musée des Confluences"
+             data-description="Architecture futuriste dédiée aux sciences et aux sociétés, à la confluence du Rhône et de la Saône">
+        
+        <div class="nav-arrow arrow-left">←</div>
+        <div class="nav-arrow arrow-right">→</div>
+        
+        <div class="image-overlay">
+            <h1>Basilique Notre-Dame de Fourvière</h1>
+            <p>Symbole de Lyon, cette basilique offre une vue panoramique sur la ville</p>
+        </div>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.fullscreen-image');
+        const arrowLeft = document.querySelector('.arrow-left');
+        const arrowRight = document.querySelector('.arrow-right');
+        const overlayTitle = document.querySelector('.image-overlay h1');
+        const overlayDesc = document.querySelector('.image-overlay p');
+        let currentIndex = 0;
+        
+        function showImage(index) {
+            images.forEach(img => img.classList.remove('active'));
+            images[index].classList.add('active');
+            
+            const currentImage = images[index];
+            overlayTitle.textContent = currentImage.dataset.title;
+            overlayDesc.textContent = currentImage.dataset.description;
+        }
+        
+        showImage(currentIndex);
+        
+        arrowLeft.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        });
+        
+        arrowRight.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                arrowLeft.click();
+            } else if (e.key === 'ArrowRight') {
+                arrowRight.click();
+            }
+        });
+    </script>
+</body>
+</html>
