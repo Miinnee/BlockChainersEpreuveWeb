@@ -724,13 +724,579 @@
         <div class="scroll-indicator"></div>
     </section>
 
+    <!-- Section Carrousel Photos -->
+<section class="photos-carousel-section">
+    <div class="photos-carousel-container">
+        <h2 class="photos-carousel-title">Galerie des Lumières</h2>
+        <p class="photos-carousel-subtitle">Découvrez la magie de Lyon illuminée</p>
+        
+        <div class="photos-carousel-wrapper">
+            <div class="photos-carousel-track">
+                <div class="photo-slide active">
+                    <img src="./assets/img/initial-tcl-lyon-bus-nuit.jpg" alt="Festival des Lumières Lyon" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Des transports de nuit adaptés</h3>
+                        <p>La visite inclue des transports en communs</p>
+                    </div>
+                </div>
+                
+                <div class="photo-slide">
+                    <img src="./assets/img/Le_Temple_du_Change,_illuminé_la_nuit.JPG" alt="Temple du Change illuminé" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Temple du Change</h3>
+                        <p>Architecture historique sublimée par les jeux de lumière</p>
+                    </div>
+                </div>
+                
+                <div class="photo-slide">
+                    <img src="./assets/img/Legion_of_Honor_at_night-500x312.jpg" alt="Légion d'Honneur nocturne" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Monuments Emblématiques</h3>
+                        <p>Les plus beaux édifices de Lyon dans leur écrin de lumière</p>
+                    </div>
+                </div>
+                
+                <div class="photo-slide">
+                    <img src="./assets/img/Lyon_-_Basilique_de_Fourvière_by_night.JPG" alt="Basilique de Fourvière illuminée" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Basilique de Fourvière</h3>
+                        <p>Le joyau de Lyon qui veille sur la ville depuis la colline</p>
+                    </div>
+                </div>
+            
+            <!-- Contrôles du carrousel -->
+            <button class="carousel-nav carousel-prev" aria-label="Photo précédente">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            
+            <button class="carousel-nav carousel-next" aria-label="Photo suivante">
+                <svg viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
+            
+            <!-- Points indicateurs -->
+            <div class="photos-carousel-dots">
+                <button class="carousel-dot active" data-slide="0" aria-label="Aller à la photo 1"></button>
+                <button class="carousel-dot" data-slide="1" aria-label="Aller à la photo 2"></button>
+                <button class="carousel-dot" data-slide="2" aria-label="Aller à la photo 3"></button>
+                <button class="carousel-dot" data-slide="3" aria-label="Aller à la photo 4"></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Section Carrousel Photos */
+.photos-carousel-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 35, 0.9) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.photos-carousel-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.photos-carousel-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.photos-carousel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--gold-primary);
+    text-align: center;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, var(--gold-dark), var(--gold-primary), var(--gold-light));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: goldShimmer 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.photos-carousel-subtitle {
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 60px;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.photos-carousel-wrapper {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 100px rgba(255, 215, 0, 0.1);
+}
+
+.photos-carousel-track {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.photo-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.1);
+}
+
+.photo-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.photo-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.8s ease;
+}
+
+.photo-slide:hover img {
+    transform: scale(1.05);
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 60px 40px 40px;
+    color: white;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.photo-slide.active .photo-overlay {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+.photo-overlay h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold-primary);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.photo-overlay p {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Contrôles de navigation */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 215, 0, 0.1);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+    color: var(--gold-primary);
+    font-size: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.photos-carousel-wrapper:hover .carousel-nav {
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-prev {
+    left: 20px;
+}
+
+.carousel-next {
+    right: 20px;
+}
+
+.carousel-nav:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: var(--gold-primary);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 
+        0 10px 30px rgba(255, 215, 0, 0.3),
+        0 0 50px rgba(255, 215, 0, 0.2);
+}
+
+.carousel-nav svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Points indicateurs */
+.photos-carousel-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--gold-primary);
+    border-radius: 50%;
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+}
+
+.carousel-dot.active {
+    border-color: var(--gold-primary);
+    background: rgba(255, 215, 0, 0.2);
+    transform: scale(1.2);
+}
+
+.carousel-dot.active::before {
+    width: 8px;
+    height: 8px;
+}
+
+.carousel-dot:hover {
+    border-color: var(--gold-light);
+    background: rgba(255, 215, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Effets de transition spéciaux */
+.photo-slide.slide-out-left {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
+}
+
+.photo-slide.slide-out-right {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0;
+}
+
+.photo-slide.slide-in-left {
+    transform: translateX(-100%) scale(1.1);
+}
+
+.photo-slide.slide-in-right {
+    transform: translateX(100%) scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .photos-carousel-title {
+        font-size: 2.8rem;
+    }
+    
+    .photos-carousel-track {
+        height: 400px;
+    }
+    
+    .photo-overlay {
+        padding: 40px 30px 30px;
+    }
+    
+    .photo-overlay h3 {
+        font-size: 1.6rem;
+    }
+    
+    .carousel-nav {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .photos-carousel-section {
+        padding: 60px 0;
+    }
+    
+    .photos-carousel-title {
+        font-size: 2.2rem;
+    }
+    
+    .photos-carousel-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+    
+    .photos-carousel-track {
+        height: 300px;
+    }
+    
+    .photo-overlay {
+        padding: 30px 20px 20px;
+    }
+    
+    .photo-overlay h3 {
+        font-size: 1.4rem;
+    }
+    
+    .photo-overlay p {
+        font-size: 0.9rem;
+    }
+    
+    .carousel-nav {
+        width: 45px;
+        height: 45px;
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .carousel-prev {
+        left: 15px;
+    }
+    
+    .carousel-next {
+        right: 15px;
+    }
+    
+    .photos-carousel-dots {
+        bottom: 20px;
+        gap: 8px;
+    }
+    
+    .carousel-dot {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .photos-carousel-container {
+        padding: 0 10px;
+    }
+    
+    .photos-carousel-track {
+        height: 250px;
+    }
+    
+    .photo-overlay h3 {
+        font-size: 1.2rem;
+    }
+    
+    .carousel-nav {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-nav svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carrousel de photos
+    let currentPhotoSlide = 0;
+    const photoSlides = document.querySelectorAll('.photo-slide');
+    const photoDots = document.querySelectorAll('.carousel-dot');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const totalPhotoSlides = photoSlides.length;
+    let photoInterval;
+
+    function showPhotoSlide(index, direction = 'next') {
+        // Supprimer les classes actives
+        photoSlides.forEach(slide => {
+            slide.classList.remove('active', 'slide-out-left', 'slide-out-right', 'slide-in-left', 'slide-in-right');
+        });
+        photoDots.forEach(dot => dot.classList.remove('active'));
+
+        // Ajouter les classes de transition
+        if (direction === 'next') {
+            if (photoSlides[currentPhotoSlide]) {
+                photoSlides[currentPhotoSlide].classList.add('slide-out-left');
+            }
+            photoSlides[index].classList.add('slide-in-right');
+        } else {
+            if (photoSlides[currentPhotoSlide]) {
+                photoSlides[currentPhotoSlide].classList.add('slide-out-right');
+            }
+            photoSlides[index].classList.add('slide-in-left');
+        }
+
+        // Activer la nouvelle slide après un court délai
+        setTimeout(() => {
+            photoSlides[index].classList.remove('slide-in-left', 'slide-in-right');
+            photoSlides[index].classList.add('active');
+        }, 50);
+
+        // Activer le point correspondant
+        if (photoDots[index]) {
+            photoDots[index].classList.add('active');
+        }
+
+        currentPhotoSlide = index;
+    }
+
+    function nextPhotoSlide() {
+        const nextIndex = (currentPhotoSlide + 1) % totalPhotoSlides;
+        showPhotoSlide(nextIndex, 'next');
+    }
+
+    function prevPhotoSlide() {
+        const prevIndex = (currentPhotoSlide - 1 + totalPhotoSlides) % totalPhotoSlides;
+        showPhotoSlide(prevIndex, 'prev');
+    }
+
+    function startPhotoAutoplay() {
+        photoInterval = setInterval(nextPhotoSlide, 4000);
+    }
+
+    function stopPhotoAutoplay() {
+        clearInterval(photoInterval);
+    }
+
+    // Event listeners pour les contrôles
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            stopPhotoAutoplay();
+            nextPhotoSlide();
+            startPhotoAutoplay();
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            stopPhotoAutoplay();
+            prevPhotoSlide();
+            startPhotoAutoplay();
+        });
+    }
+
+    // Event listeners pour les points
+    photoDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            stopPhotoAutoplay();
+            const direction = index > currentPhotoSlide ? 'next' : 'prev';
+            showPhotoSlide(index, direction);
+            startPhotoAutoplay();
+        });
+    });
+
+    // Pause au survol
+    const carouselWrapper = document.querySelector('.photos-carousel-wrapper');
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', stopPhotoAutoplay);
+        carouselWrapper.addEventListener('mouseleave', startPhotoAutoplay);
+    }
+
+    // Support tactile pour mobile
+    let startX = 0;
+    let endX = 0;
+
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        carouselWrapper.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > 50) { // Seuil de swipe
+                stopPhotoAutoplay();
+                if (diff > 0) {
+                    nextPhotoSlide(); // Swipe vers la gauche
+                } else {
+                    prevPhotoSlide(); // Swipe vers la droite
+                }
+                startPhotoAutoplay();
+            }
+        });
+    }
+
+    // Démarrer l'autoplay
+    startPhotoAutoplay();
+
+    // Optimisation des performances avec Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startPhotoAutoplay();
+            } else {
+                stopPhotoAutoplay();
+            }
+        });
+    });
+
+    if (carouselWrapper) {
+        observer.observe(carouselWrapper);
+    }
+});
+</script>
+
     <section id="features" class="features-section">
         <div class="features-container">
             <h2 class="features-title">Découvrez nos expériences</h2>
             <div class="features-grid">
                 <a href="./pages/quiz/homequiz.html" class="feature-card">
                     <div class="feature-icon">✨</div>
-                    <h3 class="feature-title">Parcours Magiques</h3>
+                    <h3 class="feature-title">Quizz Magiques</h3>
                     <p class="feature-description">
                         Explorez des itinéraires soigneusement conçus pour vous faire
                         découvrir les plus belles installations lumineuses de la ville.
