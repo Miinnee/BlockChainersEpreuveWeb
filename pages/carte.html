@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte Interactive - Lyon Lumière</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Styles existants conservés */
+        
+        /* Nouveaux styles pour la carte */
+        .map-section {
+            position: relative;
+            padding: 80px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .map-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+        }
+        
+        .map-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            color: var(--gold-primary);
+            margin-bottom: 50px;
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold-primary), var(--gold-light), var(--gold-primary));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmer 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+        }
+        
+        .vintage-map {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: sepia(50%) contrast(110%) brightness(90%);
+            transition: transform 0.5s ease;
+        }
+        
+        .map-marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            border: 3px solid var(--gold-light);
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            animation: markerPulse 2s infinite;
+        }
+        
+        @keyframes markerPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+        
+        .map-marker:hover {
+            transform: translate(-50%, -50%) scale(1.3);
+            box-shadow: 0 0 25px var(--gold-primary);
+        }
+        
+        .map-marker::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold-light);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .info-window {
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(255, 215, 0, 0.2);
+            z-index: 100;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            animation: fadeInUp 0.4s ease-out;
+            transform-style: preserve-3d;
+        }
+        
+        .info-window h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-primary);
+            margin-top: 0;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-window img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--gold-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: var(--gold-primary);
+            color: var(--dark-secondary);
+            transform: rotate(90deg);
+        }
+        
+        .map-legend {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 40px;
+            display: inline-flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+        }
+        
+        .legend-marker {
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            border: 2px solid var(--gold-light);
+            border-radius: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .map-title {
+                font-size: 2.5rem;
+            }
+            
+            .info-window {
+                width: 280px;
+                padding: 20px;
+            }
+            
+            .map-legend {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="floating-lights">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+
+    <header class="header">
+        <nav class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"></div>
+                <span>Lyon Lumière</span>
+            </a>
+            <div class="nav-menu">
+                <div class="nav-section">
+                    <a href="../index.html" class="nav-link"><span>Accueil</span></a>
+                    <a href="./reservation.html" class="nav-link"><span>Réservation</span></a>
+                    <a href="./login.html" class="nav-link active"><span>Connexion</span></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="map-section">
+        <h1 class="map-title">Carte Interactive de Lyon</h1>
+        
+        <div class="map-container">
+            <!-- Carte vintage de Lyon - à remplacer par votre image -->
+            <img src="../assets/img/carte.jpg" alt="Carte vintage de Lyon" class="vintage-map">
+            
+            <!-- Points d'intérêt -->
+            <div class="map-marker" style="top: 25%; left: 30%;" 
+                 data-title="Basilique Notre-Dame de Fourvière"
+                 data-image="https://i.imgur.com/4Q3q7Zl.jpg"
+                 data-description="Dominant Lyon depuis la colline de Fourvière, cette basilique néo-byzantine offre une vue panoramique exceptionnelle. Son architecture majestueuse et ses mosaïques dorées en font un joyau du patrimoine lyonnais."></div>
+            
+            <div class="map-marker" style="top: 40%; left: 45%;" 
+                 data-title="Place Bellecour"
+                 data-image="https://i.imgur.com/7X9vK2p.jpg"
+                 data-description="Plus grande place piétonne d'Europe, cœur vibrant de Lyon. La statue équestre de Louis XIV trône en son centre, entourée de boutiques prestigieuses et de cafés animés."></div>
+            
+            <div class="map-marker" style="top: 55%; left: 60%;" 
+                 data-title="Vieux Lyon"
+                 data-image="https://i.imgur.com/9zLmW1J.jpg"
+                 data-description="Quartier Renaissance le plus étendu après Venise, avec ses traboules secrètes et ses bouchons typiques. Un voyage dans le temps à travers ses ruelles pavées et cours intérieures."></div>
+            
+            <div class="map-marker" style="top: 35%; left: 25%;" 
+                 data-title="Théâtres Romains"
+                 data-image="https://i.imgur.com/5tY8B9f.jpg"
+                 data-description="Vestiges impressionnants de l'époque gallo-romaine quand Lyon s'appelait Lugdunum. Le grand théâtre pouvait accueillir jusqu'à 10 000 spectateurs pour des représentations en plein air."></div>
+            
+            <div class="map-marker" style="top: 65%; left: 50%;" 
+                 data-title="Presqu'île"
+                 data-image="https://i.imgur.com/3V7nQqW.jpg"
+                 data-description="Entre Rhône et Saône, ce quartier élégant abrite l'Hôtel de Ville, l'Opéra et les rues commerçantes. L'âme culturelle et économique de la ville depuis le XIXe siècle."></div>
+            
+            <!-- Fenêtre d'information -->
+            <div class="info-window">
+                <button class="close-btn">&times;</button>
+                <h3 id="info-title">Titre</h3>
+                <img id="info-image" src="" alt="">
+                <p id="info-description">Description</p>
+            </div>
+        </div>
+        
+        <div class="map-legend">
+            <div class="legend-item">
+                <span class="legend-marker"></span>
+                <span>Monument historique</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-marker"></span>
+                <span>Quartier remarquable</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-marker"></span>
+                <span>Site touristique</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="luxury-footer">
+        <!-- Vagues animées en haut du footer -->
+        <div class="footer-waves">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
+                      opacity=".25" fill="var(--gold-primary)"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" 
+                      opacity=".5" fill="var(--gold-primary)"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" 
+                      fill="var(--gold-primary)"></path>
+            </svg>
+        </div>
+    
+        <div class="footer-container">
+            <!-- Section principale du footer -->
+            <div class="footer-main">
+                <!-- Colonne Logo et description -->
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon"></div>
+                        <span>Lyon Lumière</span>
+                    </div>
+                    <p class="footer-description">
+                        Plongez dans la magie de la Fête des Lumières de Lyon. 
+                        Une expérience lumineuse inoubliable au cœur de la ville.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3Z"/></svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Twitter">
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23Z"/></svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73Z"/></svg>
+                        </a>
+                    </div>
+                </div>
+    
+                <!-- Colonne Liens rapides -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Accueil</a></li>
+                        <li><a href="../pages/reservation.html">Réservations</a></li>
+                        <li><a href="../pages/login.html">Connexion</a></li>
+                        <li><a href="../pages/register.html">Inscription</a></li>
+                        <li><a href="#">Programme</a></li>
+                        <li><a href="#">Artistes</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Colonne Contact -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Contactez-nous</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg viewBox="0 0 24 24"><path fill="var(--gold-primary)" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/></svg>
+                            <span>Place Bellecour, 69002 Lyon</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><path fill="var(--gold-primary)" d="M22 16.92v3a2 2 0 0 1-2.18 2a19.79 19.79 0 0 1-8.63-3.07a19.5 19.5 0 0 1-6-6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72a12.84 12.84 0 0 0 .7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45a12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>+33 01 48 95 41 03</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><path fill="var(--gold-primary)" d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6m-2 0l-8 5l-8-5h16m0 12H4V8l8 5l8-5v10Z"/></svg>
+                            <span>contact@lyon-lumiere.com</span>
+                        </li>
+                    </ul>
+                </div>
+    
+                <!-- Colonne Newsletter -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p class="footer-newsletter-text">
+                        Abonnez-vous pour recevoir nos dernières actualités et offres spéciales.
+                    </p>
+                    <form class="footer-newsletter">
+                        <input type="email" placeholder="Votre email" required>
+                        <button type="submit">
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"/></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+    
+            <!-- Barre du bas du footer -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    &copy; 2023 Lyon Lumière. Tous droits réservés.
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Conditions générales</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation des particules (si nécessaire)
+            
+            // Gestion de la carte interactive
+            const markers = document.querySelectorAll('.map-marker');
+            const infoWindow = document.querySelector('.info-window');
+            const infoTitle = document.getElementById('info-title');
+            const infoImage = document.getElementById('info-image');
+            const infoDescription = document.getElementById('info-description');
+            const closeBtn = document.querySelector('.close-btn');
+            const mapContainer = document.querySelector('.map-container');
+            
+            // Affichage des infos au clic sur un marqueur
+            markers.forEach(marker => {
+                marker.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Récupération des données
+                    const title = this.getAttribute('data-title');
+                    const image = this.getAttribute('data-image');
+                    const description = this.getAttribute('data-description');
+                    
+                    // Mise à jour de la fenêtre
+                    infoTitle.textContent = title;
+                    infoImage.src = image;
+                    infoImage.alt = title;
+                    infoDescription.textContent = description;
+                    
+                    // Positionnement de la fenêtre
+                    const markerRect = this.getBoundingClientRect();
+                    const mapRect = mapContainer.getBoundingClientRect();
+                    
+                    let left = markerRect.left - mapRect.left + 20;
+                    let top = markerRect.top - mapRect.top + 20;
+                    
+                    // Ajustement pour ne pas dépasser
+                    if (left + 350 > mapRect.width) left = mapRect.width - 370;
+                    if (top + 300 > mapRect.height) top = mapRect.height - 320;
+                    
+                    infoWindow.style.left = left + 'px';
+                    infoWindow.style.top = top + 'px';
+                    infoWindow.style.display = 'block';
+                });
+            });
+            
+            // Fermeture de la fenêtre
+            closeBtn.addEventListener('click', function() {
+                infoWindow.style.display = 'none';
+            });
+            
+            // Fermeture en cliquant à l'extérieur
+            document.addEventListener('click', function() {
+                infoWindow.style.display = 'none';
+            });
+            
+            // Empêcher la fermeture quand on clique dans la fenêtre
+            infoWindow.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // Animation des marqueurs
+            markers.forEach((marker, index) => {
+                marker.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>
